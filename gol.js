@@ -2,7 +2,7 @@ class GameOfLife {
     constructor() {
 
         this.cell_size = 20;
-        this.dead_colour = white;
+        this.dead_colour = `#C0C0C0`;
         this.alive_colour = black;
         this.cells_in_column = Math.floor(canvas.width / this.cell_size);
         this.cells_in_rows = Math.floor(canvas.height / this.cell_size);
