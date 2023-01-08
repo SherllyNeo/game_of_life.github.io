@@ -8,12 +8,13 @@ class GameOfLife {
         this.cells_in_rows = Math.floor(canvas.height / this.cell_size);
         this.active_array = [];
         this.inactive_array = [];
+        
 
         this.arrayInitialization = () => {
 
-            for (let i = 0; i < this.cells_in_rows; i++) {
+            for (let i = 0; i <= this.cells_in_rows; i++) {
                 this.active_array[i] = [];
-                for (let j = 0; j < this.cells_in_column; j++) {
+                for (let j = 0; j <= this.cells_in_column; j++) {
                     this.active_array[i][j] = 0;
                 }
             }
@@ -75,15 +76,15 @@ class GameOfLife {
         this.updateCellValue = (row, col) => {
 
             const total = this.countNeighbours(row, col);
-            // cell with more than 4 or less then 3 neighbours dies. 1 => 0; 0 => 0
             if (total > 4 || total < 3) {
                 return 0;
             }
-            // dead cell with 3 neighbours becomes alive. 0 => 1
-            else if (this.active_array[row][col] === 0 && total === 3) {
+         
+            else if (total === 3) {
+                console.log(row,col,"has",total,"neighbours")
                 return 1;
             }
-            // or returning its status back. 0 => 0; 1 => 1
+   
             else {
                 return this.active_array[row][col];
             }
@@ -96,6 +97,10 @@ class GameOfLife {
                 for (let j = 0; j < this.cells_in_column; j++) {
                     let new_state = this.updateCellValue(i, j);
                     this.inactive_array[i][j] = new_state;
+                    if (new_state == 1) {
+                        console.log(i,j,"has been changed to",new_state)
+                    }
+                   
                 }
             }
             this.active_array = this.inactive_array
@@ -107,8 +112,23 @@ class GameOfLife {
         };
 
         this.runGame = () => {
-            this.updateLifeCycle();
             this.fillArray();
+            this.updateLifeCycle();
+        };
+           
+
+        this.draw = (e) => {
+            var rect = canvas.getBoundingClientRect(); 
+            var width = canvas.width; //0 to 1400
+            var height = canvas.height; //0 to 500
+            let row = Math.floor(((e.clientX - rect.left) / width) * this.cells_in_column)
+            let col = Math.floor(((e.clientY - rect.top)/ height) * this.cells_in_rows)
+
+            this.active_array[col][row] = 1 - this.active_array[col][row];
+            console.log(this.active_array.length,this.active_array[0].length,col,row,)
+            
+            this.fillArray();
+            
         };
         
     }
