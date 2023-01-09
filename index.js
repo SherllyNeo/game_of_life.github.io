@@ -13,6 +13,7 @@ window.onload = () => {
     })
 
     document.querySelector("#stop").addEventListener("click", () => {
+        window.location.reload();
         game.gameSetUp();
     })
 
