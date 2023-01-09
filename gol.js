@@ -8,17 +8,15 @@ class GameOfLife {
         this.cells_in_rows = Math.floor(canvas.height / this.cell_size);
         this.active_array = [];
         this.inactive_array = [];
-        
+     this.arrayInitialization = () => {
 
-        this.arrayInitialization = () => {
-
-            for (let i = 0; i <= this.cells_in_rows; i++) {
-                this.active_array[i] = [];
-                for (let j = 0; j <= this.cells_in_column; j++) {
-                    this.active_array[i][j] = 0;
-                }
-            }
-            this.inactive_array = this.active_array;
+             for (let i = 0; i <= this.cells_in_rows; i++) {
+                 this.active_array[i] = [];
+                 for (let j = 0; j <= this.cells_in_column; j++) {
+                     this.active_array[i][j] = 0;
+                 }
+             }
+	
 
         };
 
@@ -60,50 +58,58 @@ class GameOfLife {
            
         };
 
-        this.countNeighbours = (row, col) => {
-            let total_neighbours = 0;
-            total_neighbours += this.setCellValueHelper(row - 1, col - 1);
-            total_neighbours += this.setCellValueHelper(row - 1, col);
-            total_neighbours += this.setCellValueHelper(row - 1, col + 1);
-            total_neighbours += this.setCellValueHelper(row, col - 1);
-            total_neighbours += this.setCellValueHelper(row, col + 1);
-            total_neighbours += this.setCellValueHelper(row + 1, col - 1);
-            total_neighbours += this.setCellValueHelper(row + 1, col);
-            total_neighbours += this.setCellValueHelper(row + 1, col + 1);
-            return total_neighbours;
-        };
 
-        this.updateCellValue = (row, col) => {
+        this.rules = (total,row, col) => {
+          let current_state = this.active_array[row][col];
 
-            const total = this.countNeighbours(row, col);
-            if (total > 4 || total < 3) {
+            if (total > 4 || total == 1) {
                 return 0;
             }
          
-            else if (total === 3) {
+            else if (total == 3 || (current_state == 1 && total == 2)) {
                 console.log(row,col,"has",total,"neighbours")
                 return 1;
             }
    
             else {
-                return this.active_array[row][col];
+                return 0;
             }
 
         };
 
+
         this.updateLifeCycle = () => {
+	
+
+	    let holder = []
+            for (let i = 0; i <= this.cells_in_rows; i++) {
+                holder[i] = [];
+                for (let j = 0; j <= this.cells_in_column; j++) {
+                   holder[i][j] = 0;
+                }
+            }
+		
 
             for (let i = 0; i < this.cells_in_rows; i++) {
                 for (let j = 0; j < this.cells_in_column; j++) {
-                    let new_state = this.updateCellValue(i, j);
-                    this.inactive_array[i][j] = new_state;
+                     let  neigh1 = this.setCellValueHelper(i - 1, j - 1);
+                     let  neigh2 = this.setCellValueHelper(i - 1, j);
+                     let  neigh3 = this.setCellValueHelper(i - 1, j + 1);
+                     let  neigh4 = this.setCellValueHelper(i, j - 1);
+                     let  neigh5 = this.setCellValueHelper(i, j + 1);
+                     let  neigh6 = this.setCellValueHelper(i + 1, j - 1);
+                     let  neigh7 = this.setCellValueHelper(i + 1, j);
+                     let  neigh8 = this.setCellValueHelper(i + 1, j + 1);
+                    let total_neigh = neigh1 + neigh2 + neigh3 + neigh4+ neigh5+ neigh6+ neigh7+ neigh8
+                    let new_state = this.rules(total_neigh,i, j);
+                    holder[i][j] = new_state;
                     if (new_state == 1) {
                         console.log(i,j,"has been changed to",new_state)
                     }
                    
                 }
             }
-            this.active_array = this.inactive_array
+            this.active_array =[...holder];
 
         };
 
@@ -130,6 +136,6 @@ class GameOfLife {
             this.fillArray();
             
         };
-        
+ 
     }
 }
