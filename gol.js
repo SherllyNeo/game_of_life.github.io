@@ -10,9 +10,9 @@ class GameOfLife {
         this.inactive_array = [];
      this.arrayInitialization = () => {
 
-             for (let i = 0; i <= this.cells_in_rows; i++) {
+             for (let i = 0; i < this.cells_in_rows; i++) {
                  this.active_array[i] = [];
-                 for (let j = 0; j <= this.cells_in_column; j++) {
+                 for (let j = 0; j < this.cells_in_column; j++) {
                      this.active_array[i][j] = 0;
                  }
              }
@@ -51,8 +51,8 @@ class GameOfLife {
                 return this.active_array[row][col];
             }
             catch {
-                let row_ = (row + this.cells_in_rows) % this.cells_in_rows;
-                let col_ =  (col + this.cells_in_column) % this.cells_in_column;
+                let row_ = (row + this.cells_in_rows) % (this.cells_in_rows);
+                let col_ =  (col + this.cells_in_column) % (this.cells_in_column);
                 return this.active_array[row_][col_]
             }
            
