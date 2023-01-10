@@ -3,10 +3,10 @@ class Cell {
         this.alive = false;
         this.history = [];
     
-        this.get_colour = () => {
+        this.get_count = () => {
             let true_count = 0;
             let hist = [...this.history];
-            while (hist.at(-1) == true) {
+            while (hist.at(-1)) {
                 true_count++
                 hist.pop()
             }
@@ -59,7 +59,7 @@ class GameOfLife {
                     let colour;
                     let cell = this.active_array[i][j]
                     if (cell.alive) {
-                        let count = cell.get_colour()
+                        let count = cell.get_count()
                         console.log("count:",cell.history)
                         if (count == 0) {
                             colour = this.alive_colour;
@@ -191,7 +191,6 @@ class GameOfLife {
             console.log(this.active_array.length,this.active_array[0].length,col,row,)
             
             this.fillArray();
-            
         };
  
     }
