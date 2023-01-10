@@ -92,23 +92,14 @@ class GameOfLife {
         };
 
         this.setCellValueHelper = (row, col) => {
-            try {
-                if (this.active_array[row][col].alive) {
-                    return 1;
-                }
-                else {
-                    return 0;
-                }
+        
+            let row_ = (row + this.cells_in_rows) % (this.cells_in_rows);
+            let col_ =  (col + this.cells_in_column) % (this.cells_in_column);
+            if (this.active_array[row_][col_].alive) {
+                return 1;
             }
-            catch {
-                let row_ = (row + this.cells_in_rows) % (this.cells_in_rows);
-                let col_ =  (col + this.cells_in_column) % (this.cells_in_column);
-                if (this.active_array[row_][col_].alive) {
-                    return 1;
-                }
-                else {
-                    return 0;
-                }
+            else {
+                return 0;
             }
            
         };
