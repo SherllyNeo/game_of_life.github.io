@@ -45,7 +45,6 @@ class GameOfLife {
                 for (let j = 0; j < this.cells_in_column; j++) {
                     let binary = (Math.random() > 0.5)
                     this.active_array[i][j].alive = binary;
-                    this.active_array[i][j].history = [].concat(this.active_array[i][j].history, binary);
                     
                 }
             }
