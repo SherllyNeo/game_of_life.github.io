@@ -7,9 +7,6 @@ window.onload = () => {
     document.querySelector("#start-random").addEventListener("click", () => {
         game.rand();
         game.fillArray();
-        window.setInterval(() => {
-            game.runGame();
-        }, 300)
     })
 
     document.querySelector("#stop").addEventListener("click", () => {
